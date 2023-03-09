@@ -5,7 +5,6 @@ import './navbar.css'
 const Navbar = ({ name }) => {
   const [isLogged, setIsLogged] = useState(false)
   const { pathname } = useLocation()
-  console.log(pathname)
 
   return (
     <nav className="navbar bg-dark" data-bs-theme="dark">

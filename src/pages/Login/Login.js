@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Login = () => {
 
@@ -15,6 +15,14 @@ const Login = () => {
       [event.target.name]: event.target.value
     }))
   }
+
+  useEffect(() => {
+    document.title = 'Login'
+
+    return () => {
+      document.title = 'RC - FakeStore'
+    }
+  }, [])
 
   return (
     <div className='form-page mt-5 text-white'>
