@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './productcard.css'
+import './product-card.css'
 
 const ProductCard = ({
   title, id, category, description, image, price, deleteProduct
