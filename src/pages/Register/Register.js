@@ -2,8 +2,27 @@ import { useForm } from "react-hook-form";
 import RequiredError from "../../components/FieldErrors/FieldErrors";
 
 const Register = () => {
-  const { register, handleSubmit, formState } = useForm();
-  const onSubmit = data => console.log(data);
+  const { register, handleSubmit, formState, reset } = useForm();
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+      const parsedData = await response.json()
+
+      sessionStorage.setItem('token', JSON.stringify(parsedData.token))
+
+      reset()
+
+    } catch (error) {
+      reset()
+    }
+  }
 
   console.log(formState.errors.age)
 

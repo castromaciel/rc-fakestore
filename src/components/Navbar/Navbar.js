@@ -1,22 +1,20 @@
-import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import './navbar.css'
 
 const Navbar = ({ name }) => {
-  const [isLogged, setIsLogged] = useState(false)
   const { pathname } = useLocation()
 
   return (
     <nav className="navbar bg-dark" data-bs-theme="dark">
       <div className="container-fluid">
-        <NavLink className="navbar-brand text-white" exact to="/">{ name }</NavLink>
+        <NavLink className="navbar-brand text-white" to="/">{ name }</NavLink>
         
         {/* TODO: Crear rutas de login y registro */}
         <ul className='navbar-nav d-flex flex-row gap-4'>
           <li className='nav-item'>
             <NavLink
               className={( { isActive } ) => isActive ? 'nav-link active' : 'nav-link' }
-              exact to="/"
+              to="/"
             >
               Home
             </NavLink>
