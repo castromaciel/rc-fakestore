@@ -1,34 +1,43 @@
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import RequiredError from "../../components/FieldErrors/FieldErrors";
+import './register.css';
 
 const Register = () => {
   const { register, handleSubmit, formState, reset } = useForm();
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+      const response = await fetch('http://localhost:8080/api/users', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         },
       })
-      const parsedData = await response.json()
+      const datum = await response.json()
+      console.log(datum)
+      
+      if(datum?.errors) {
 
-      sessionStorage.setItem('token', JSON.stringify(parsedData.token))
+        toast(datum.errors[0].msg, {
+          theme: 'dark'
+        })
 
-      reset()
+      } else {
+        toast(datum.message)
+      }
 
     } catch (error) {
-      reset()
+      toast('Falla al realizar el registro')
     }
   }
-
-  console.log(formState.errors.age)
 
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <div className="form-page text-white" >
+      <ToastContainer />
       <h1>Registro</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* register your input into the hook by invoking the "register" function */}
@@ -39,6 +48,9 @@ const Register = () => {
         <input placeholder="example@example.com" {...register("email", { required: true })} />
         {/* errors will return when field validation fails  */}
         {formState.errors.email && <RequiredError />}
+        <input placeholder="password" type="password" maxLength={12} {...register("password", { required: true, minLength: 8 })} />
+        {/* errors will return when field validation fails  */}
+        {formState.errors.password && <RequiredError />}
 
         <input
           type='number'
